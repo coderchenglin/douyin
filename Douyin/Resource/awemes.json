@@ -1,0 +1,18 @@
+[
+  {
+    "awemeId": "1",
+    "desc": "第一个短视频",
+    "videoUrl": "https://example.com/video1.mp4",
+    "coverUrl": "https://example.com/cover1.jpg",
+    "userName": "用户A",
+    "avatarUrl": "https://example.com/avatarA.jpg"
+  },
+  {
+    "awemeId": "2",
+    "desc": "第二个短视频",
+    "videoUrl": "https://example.com/video2.mp4",
+    "coverUrl": "https://example.com/cover2.jpg",
+    "userName": "用户B",
+    "avatarUrl": "https://example.com/avatarB.jpg"
+  }
+]
