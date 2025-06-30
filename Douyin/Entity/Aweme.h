@@ -20,6 +20,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *userName;     // 用户昵称
 @property (nonatomic, copy) NSString *avatarUrl;    // 用户头像
 
+@property (nonatomic, assign) NSInteger likeCount;
+@property (nonatomic, assign) NSInteger commentCount;
+@property (nonatomic, assign) NSInteger shareCount;
+@property (nonatomic, assign) BOOL isLiked;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AwemeListCell : UITableViewCell
 
 - (void)configWithAweme:(Aweme *)aweme;
+- (void)playVideo;
+- (void)pauseVideo;
 
 @end
 
