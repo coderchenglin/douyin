@@ -1,17 +1,13 @@
 //
-//  Aweme.m
+//  Comment.m
 //  Douyin
 //
 //  Created by chenglin on 2025/6/29.
 //  Copyright © 2025 Qiao Shi. All rights reserved.
 //
 
-#import "Aweme.h"
+#import "Comment.h"
 
-@implementation Aweme
+@implementation Comment
 
-+ (Class)comments_class {
-    return [Comment class];
-}
-
-@end
+@end 

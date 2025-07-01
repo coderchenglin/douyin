@@ -13,6 +13,15 @@
 		68A4C81D2E1122B60056480C /* Aweme.m in Sources */ = {isa = PBXBuildFile; fileRef = 68A4C81C2E1122B60056480C /* Aweme.m */; };
 		68A4C8262E112A110056480C /* awemes.json in Resources */ = {isa = PBXBuildFile; fileRef = 68A4C8252E112A110056480C /* awemes.json */; };
 		68A4C8292E114AF40056480C /* AwemeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 68A4C8282E114AF40056480C /* AwemeListCell.m */; };
+		68A4C82B2E136E870056480C /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 68A4C82A2E136E870056480C /* like.png */; };
+		68A4C82D2E136E9D0056480C /* like_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 68A4C82C2E136E9D0056480C /* like_selected.png */; };
+		68A4C82F2E136EFA0056480C /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 68A4C82E2E136EFA0056480C /* comment.png */; };
+		68A4C8312E136F610056480C /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 68A4C8302E136F610056480C /* share.png */; };
+		68A4C8332E136F9D0056480C /* 收藏.png in Resources */ = {isa = PBXBuildFile; fileRef = 68A4C8322E136F9D0056480C /* 收藏.png */; };
+		68A4C8352E136FA30056480C /* 收藏 -已收藏.png in Resources */ = {isa = PBXBuildFile; fileRef = 68A4C8342E136FA20056480C /* 收藏 -已收藏.png */; };
+		68A4C8382E137CD30056480C /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 68A4C8372E137CD30056480C /* Comment.m */; };
+		68A4C83B2E138A430056480C /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68A4C83A2E138A430056480C /* CommentViewController.m */; };
+		68A4C9192E13DE150056480C /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 68A4C9182E13DE150056480C /* CommentCell.m */; };
 		68FC1B3B2E11028D00A6C73C /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68FC1B382E11028D00A6C73C /* MainTabBarController.m */; };
 		68FC1B3C2E11028D00A6C73C /* UserHomePageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68FC1B3A2E11028D00A6C73C /* UserHomePageController.m */; };
 		68FC1B3D2E11028D00A6C73C /* GroupChatController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68FC1B362E11028D00A6C73C /* GroupChatController.m */; };
@@ -35,6 +44,18 @@
 		68A4C8252E112A110056480C /* awemes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = awemes.json; sourceTree = "<group>"; };
 		68A4C8272E114AF40056480C /* AwemeListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AwemeListCell.h; sourceTree = "<group>"; };
 		68A4C8282E114AF40056480C /* AwemeListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AwemeListCell.m; sourceTree = "<group>"; };
+		68A4C82A2E136E870056480C /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like.png; sourceTree = "<group>"; };
+		68A4C82C2E136E9D0056480C /* like_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like_selected.png; sourceTree = "<group>"; };
+		68A4C82E2E136EFA0056480C /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment.png; sourceTree = "<group>"; };
+		68A4C8302E136F610056480C /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
+		68A4C8322E136F9D0056480C /* 收藏.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "收藏.png"; sourceTree = "<group>"; };
+		68A4C8342E136FA20056480C /* 收藏 -已收藏.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "收藏 -已收藏.png"; sourceTree = "<group>"; };
+		68A4C8362E137CD30056480C /* Comment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		68A4C8372E137CD30056480C /* Comment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
+		68A4C8392E138A430056480C /* CommentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
+		68A4C83A2E138A430056480C /* CommentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
+		68A4C9172E13DE150056480C /* CommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
+		68A4C9182E13DE150056480C /* CommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
 		68FC1B332E11028D00A6C73C /* AwemeListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AwemeListController.h; sourceTree = "<group>"; };
 		68FC1B342E11028D00A6C73C /* AwemeListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AwemeListController.m; sourceTree = "<group>"; };
 		68FC1B352E11028D00A6C73C /* GroupChatController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupChatController.h; sourceTree = "<group>"; };
@@ -95,6 +116,8 @@
 		3B00F275210EDF0200E99DE5 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				68A4C8362E137CD30056480C /* Comment.h */,
+				68A4C8372E137CD30056480C /* Comment.m */,
 				3B00F276210EDF2100E99DE5 /* BaseModel.h */,
 				3B00F277210EDF3100E99DE5 /* BaseModel.m */,
 				68A4C81B2E1122B60056480C /* Aweme.h */,
@@ -156,6 +179,12 @@
 			isa = PBXGroup;
 			children = (
 				68A4C8252E112A110056480C /* awemes.json */,
+				68A4C82A2E136E870056480C /* like.png */,
+				68A4C82C2E136E9D0056480C /* like_selected.png */,
+				68A4C82E2E136EFA0056480C /* comment.png */,
+				68A4C8322E136F9D0056480C /* 收藏.png */,
+				68A4C8342E136FA20056480C /* 收藏 -已收藏.png */,
+				68A4C8302E136F610056480C /* share.png */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -167,6 +196,10 @@
 				68FC1B342E11028D00A6C73C /* AwemeListController.m */,
 				68A4C8272E114AF40056480C /* AwemeListCell.h */,
 				68A4C8282E114AF40056480C /* AwemeListCell.m */,
+				68A4C8392E138A430056480C /* CommentViewController.h */,
+				68A4C83A2E138A430056480C /* CommentViewController.m */,
+				68A4C9172E13DE150056480C /* CommentCell.h */,
+				68A4C9182E13DE150056480C /* CommentCell.m */,
 			);
 			path = AwemeList;
 			sourceTree = "<group>";
@@ -265,7 +298,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68A4C8312E136F610056480C /* share.png in Resources */,
+				68A4C8352E136FA30056480C /* 收藏 -已收藏.png in Resources */,
 				68A4C8262E112A110056480C /* awemes.json in Resources */,
+				68A4C8332E136F9D0056480C /* 收藏.png in Resources */,
+				68A4C82B2E136E870056480C /* like.png in Resources */,
+				68A4C82D2E136E9D0056480C /* like_selected.png in Resources */,
+				68A4C82F2E136EFA0056480C /* comment.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,9 +336,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68A4C83B2E138A430056480C /* CommentViewController.m in Sources */,
+				68A4C9192E13DE150056480C /* CommentCell.m in Sources */,
 				68A4C81D2E1122B60056480C /* Aweme.m in Sources */,
 				68FC1B3B2E11028D00A6C73C /* MainTabBarController.m in Sources */,
 				68FC1B3C2E11028D00A6C73C /* UserHomePageController.m in Sources */,
+				68A4C8382E137CD30056480C /* Comment.m in Sources */,
 				68A4C8292E114AF40056480C /* AwemeListCell.m in Sources */,
 				68FC1B3D2E11028D00A6C73C /* GroupChatController.m in Sources */,
 				68FC1B3E2E11028D00A6C73C /* AwemeListController.m in Sources */,

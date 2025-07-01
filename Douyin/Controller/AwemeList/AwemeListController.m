@@ -8,10 +8,12 @@
 
 #import "AwemeListController.h"
 #import "Aweme.h"
+#import "Comment.h"
 #import <Masonry/Masonry.h>
 #import <AFNetworking/AFNetworking.h>
 #import <SDWebImage/SDWebImage.h>
 #import "AwemeListCell.h"
+#import "CommentViewController.h"
 
 
 
@@ -36,11 +38,19 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.pagingEnabled = YES; // 关键：分页滚动
     [self.view addSubview:self.tableView];
+    
+    // 系统会自动为 TableView 的 contentInset.top 加上一段 Safe Area 的高度（比如 iPhone X 顶部的刘海/状态栏高度）。自动避开导航栏、状态栏、TabBar、Safe Area 等
+    // 这里为了开始就让cell全屏，而不是向下偏移，把这个属性给禁用掉
+    if (@available(iOS 11.0, *)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
     
     // Masonry布局
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
+        make.top.left.right.equalTo(self.view);
+        make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom);
     }];
     
     [self.tableView registerClass:[AwemeListCell class] forCellReuseIdentifier:@"AwemeListCell"];
@@ -55,6 +65,15 @@
         NSMutableArray *awemeArr = [NSMutableArray array];
         for (NSDictionary *dict in responseObject) {
             Aweme *aweme = [[Aweme alloc] initWithDictionary:dict error:nil];
+            // 强制类型转换
+            if (aweme.comments.count > 0 && [aweme.comments[0] isKindOfClass:[NSDictionary class]]) {
+                NSMutableArray *commentModels = [NSMutableArray array];
+                for (NSDictionary *commentDict in aweme.comments) {
+                    Comment *comment = [[Comment alloc] initWithDictionary:commentDict error:nil];
+                    [commentModels addObject:comment];
+                }
+                aweme.comments = commentModels;
+            }
             [awemeArr addObject:aweme];
         }
         self.dataArray = awemeArr;
@@ -74,6 +93,18 @@
 // 滚动结束
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [self playCurrentVisibleCell];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    self.tabBarController.tabBar.hidden = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 // 在 viewDidAppear: 里自动播放第一个 Cell：
@@ -122,15 +153,40 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 300;
+    return tableView.frame.size.height;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AwemeListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AwemeListCell" forIndexPath:indexPath];
     Aweme *aweme = self.dataArray[indexPath.row];
     [cell configWithAweme:aweme];
+    __weak typeof(self) weakSelf = self;
+    cell.commentButtonTappedBlock = ^{
+        CommentViewController *vc = [[CommentViewController alloc] init];
+        vc.aweme = aweme;
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+        [self presentViewController:nav animated:YES completion:nil];
+    };
+    cell.shareButtonTappedBlock = ^{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"分享" message:@"这里可以选择分享方式" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *wx = [UIAlertAction actionWithTitle:@"微信" style:UIAlertActionStyleDefault handler:nil];
+        UIAlertAction *qq = [UIAlertAction actionWithTitle:@"QQ" style:UIAlertActionStyleDefault handler:nil];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:wx];
+        [alert addAction:qq];
+        [alert addAction:cancel];
+        [self presentViewController:alert animated:YES completion:nil];
+    };
+    
     return cell;
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [self.tableView reloadData];
+    });
+}
 
 @end 
