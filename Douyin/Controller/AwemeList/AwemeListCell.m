@@ -10,6 +10,7 @@
 #import "Aweme.h"
 #import <Masonry/Masonry.h>
 #import <SDWebImage/SDWebImage.h>
+#import "DYVideoCacheLoader.h"
 
 @interface AwemeListCell ()
 // 视频容器
@@ -181,7 +182,6 @@
             make.centerX.equalTo(self.rightActionContainer);
             make.bottom.equalTo(self.rightActionContainer);
         }];
-        
         // 底部信息区
         [self.bottomInfoContainer mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.contentView).offset(12);
@@ -275,18 +275,48 @@
 - (void)playVideo {
     if (!self.currentVideoUrl) return;
     if (!self.player) {
-        AVPlayerItem *item = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:self.currentVideoUrl]];
+        // 修改原始 URL 的 scheme
+        NSURL *originalUrl = [NSURL URLWithString:self.currentVideoUrl];
+        NSURLComponents *components = [NSURLComponents componentsWithURL:originalUrl resolvingAgainstBaseURL:NO];
+        components.scheme = @"streaming"; // 使用自定义 scheme，如 "streaming"
+        NSURL *customUrl = [components URL];
+        
+        AVURLAsset *asset = [AVURLAsset URLAssetWithURL:customUrl options:nil];
+        DYVideoCacheLoader *loader = [[DYVideoCacheLoader alloc] initWithOriginalURL:originalUrl]; // 原始 URL 传给 loader
+        [asset.resourceLoader setDelegate:loader queue:dispatch_get_main_queue()];
+        
+        AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:asset];
         self.player = [AVPlayer playerWithPlayerItem:item];
         self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
         self.playerLayer.frame = self.videoContainerView.bounds;
         self.playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
         [self.videoContainerView.layer addSublayer:self.playerLayer];
-        // 循环播放
+        [item addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(replayVideo) name:AVPlayerItemDidPlayToEndTimeNotification object:item];
     }
     self.playerLayer.frame = self.videoContainerView.bounds;
-    [self.player play];
-    self.coverImageView.alpha = 0.0;
+    if (self.player.currentItem.status == AVPlayerItemStatusReadyToPlay) {
+        [self.player play];
+        self.coverImageView.alpha = 0.0;
+    } else {
+        // 可选：显示 loading UI
+    }
+}
+
+// KVO 监听播放状态
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"status"]) {
+        AVPlayerItem *item = (AVPlayerItem *)object;
+        if (item.status == AVPlayerItemStatusReadyToPlay) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.player play];
+                self.coverImageView.alpha = 0.0;
+                // 可选：隐藏 loading UI
+            });
+        } else if (item.status == AVPlayerItemStatusFailed) {
+            // 可选：显示加载失败提示
+        }
+    }
 }
 
 - (void)pauseVideo {
@@ -302,6 +332,9 @@
     [super prepareForReuse];
     [self pauseVideo];
     [self.playerLayer removeFromSuperlayer];
+    if (self.player.currentItem) {
+        [self.player.currentItem removeObserver:self forKeyPath:@"status"];
+    }
     self.player = nil;
     self.playerLayer = nil;
     self.currentVideoUrl = nil;
@@ -310,6 +343,53 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    if (self.player.currentItem) {
+        [self.player.currentItem removeObserver:self forKeyPath:@"status"];
+    }
+}
+
+#pragma mark - 视频预加载（产品级）
+
++ (void)preloadVideoWithUrl:(NSString *)url preloadSeconds:(NSTimeInterval)seconds {
+    if (!url || url.length == 0) return;
+    NSURL *videoUrl = [NSURL URLWithString:url];
+    if (!videoUrl) return;
+    // 1. 创建分片缓存加载器
+    DYVideoCacheLoader *loader = [[DYVideoCacheLoader alloc] initWithOriginalURL:videoUrl];
+    // 2. 估算前seconds秒需要的字节数（假设码率1Mbps=128KB/s，实际可用HEAD请求获取Content-Length/Duration更精确）
+    // 这里简单假设1秒=256KB，4秒=1024KB
+    NSUInteger preloadBytes = (NSUInteger)(256 * 1024 * seconds);
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:videoUrl];
+    NSString *range = [NSString stringWithFormat:@"bytes=0-%lu", (unsigned long)(preloadBytes-1)];
+    [request setValue:range forHTTPHeaderField:@"Range"];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (!error && data) {
+            // 写入本地缓存（与DYVideoCacheLoader一致）
+            NSString *cacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+            NSString *cacheRoot = [cacheDir stringByAppendingPathComponent:@"DYVideoCache"];
+            [[NSFileManager defaultManager] createDirectoryAtPath:cacheRoot withIntermediateDirectories:YES attributes:nil error:nil];
+            NSString *fileName = [videoUrl.absoluteString stringByReplacingOccurrencesOfString:@":" withString:@"_"];
+            NSString *cachePath = [cacheRoot stringByAppendingPathComponent:fileName];
+            if (![[NSFileManager defaultManager] fileExistsAtPath:cachePath]) {
+                [[NSFileManager defaultManager] createFileAtPath:cachePath contents:nil attributes:nil];
+            }
+            NSFileHandle *handle = [NSFileHandle fileHandleForWritingAtPath:cachePath];
+            [handle seekToFileOffset:0];
+            [handle writeData:data];
+            [handle closeFile];
+        }
+        // 预加载只缓存，不播
+    }];
+    [task resume];
+}
+
++ (void)preloadVideoWithUrl:(NSString *)url {
+    [self preloadVideoWithUrl:url preloadSeconds:4.0];
+}
+
++ (void)clearPreloadCache {
+    [DYVideoCacheLoader clearAllCache];
 }
 
 @end

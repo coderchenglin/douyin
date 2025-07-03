@@ -26,6 +26,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)playVideo;
 - (void)pauseVideo;
 
+// 新增：视频预加载静态方法
++ (void)preloadVideoWithUrl:(NSString *)url;
++ (void)clearPreloadCache; // 可选：清理预加载记录
+
 @end
 
 NS_ASSUME_NONNULL_END

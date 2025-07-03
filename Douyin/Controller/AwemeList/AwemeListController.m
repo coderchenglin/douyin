@@ -115,12 +115,28 @@
 
 - (void)playCurrentVisibleCell {
     NSArray *visibleCells = [self.tableView visibleCells];
+    NSInteger currentRow = [self currentVisibleRow];
     for (AwemeListCell *cell in visibleCells) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        if (indexPath.row == [self currentVisibleRow]) {
+        if (indexPath.row == currentRow) {
             [cell playVideo];
         } else {
             [cell pauseVideo];
+        }
+    }
+    // ====== 产品级预加载：滑动时自动预加载下一个/下下个视频的前4秒分片 ======
+    // 1. 预加载下一个视频
+    if (currentRow + 1 < self.dataArray.count) {
+        Aweme *nextAweme = self.dataArray[currentRow + 1];
+        if (nextAweme.videoUrl.length > 0) {
+            [AwemeListCell preloadVideoWithUrl:nextAweme.videoUrl];
+        }
+    }
+    // 2. 预加载下下个视频
+    if (currentRow + 2 < self.dataArray.count) {
+        Aweme *next2Aweme = self.dataArray[currentRow + 2];
+        if (next2Aweme.videoUrl.length > 0) {
+            [AwemeListCell preloadVideoWithUrl:next2Aweme.videoUrl];
         }
     }
 }

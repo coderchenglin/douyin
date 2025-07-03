@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#import <AVFoundation/AVFoundation.h>
 
 @class Aweme;
 
@@ -14,5 +15,6 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray<Aweme *> *dataArray; // 后续会用模型数组
+@property (nonatomic, strong) NSMutableDictionary<NSString *, AVPlayerItem *> *playerItemCache;
 
 @end

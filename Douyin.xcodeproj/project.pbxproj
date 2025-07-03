@@ -22,6 +22,7 @@
 		68A4C8382E137CD30056480C /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 68A4C8372E137CD30056480C /* Comment.m */; };
 		68A4C83B2E138A430056480C /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68A4C83A2E138A430056480C /* CommentViewController.m */; };
 		68A4C9192E13DE150056480C /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 68A4C9182E13DE150056480C /* CommentCell.m */; };
+		68A4C91F2E167CCB0056480C /* DYVideoCacheLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 68A4C91E2E167CCB0056480C /* DYVideoCacheLoader.m */; };
 		68FC1B3B2E11028D00A6C73C /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68FC1B382E11028D00A6C73C /* MainTabBarController.m */; };
 		68FC1B3C2E11028D00A6C73C /* UserHomePageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68FC1B3A2E11028D00A6C73C /* UserHomePageController.m */; };
 		68FC1B3D2E11028D00A6C73C /* GroupChatController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68FC1B362E11028D00A6C73C /* GroupChatController.m */; };
@@ -56,6 +57,8 @@
 		68A4C83A2E138A430056480C /* CommentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
 		68A4C9172E13DE150056480C /* CommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
 		68A4C9182E13DE150056480C /* CommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
+		68A4C91D2E167CCB0056480C /* DYVideoCacheLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DYVideoCacheLoader.h; sourceTree = "<group>"; };
+		68A4C91E2E167CCB0056480C /* DYVideoCacheLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DYVideoCacheLoader.m; sourceTree = "<group>"; };
 		68FC1B332E11028D00A6C73C /* AwemeListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AwemeListController.h; sourceTree = "<group>"; };
 		68FC1B342E11028D00A6C73C /* AwemeListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AwemeListController.m; sourceTree = "<group>"; };
 		68FC1B352E11028D00A6C73C /* GroupChatController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupChatController.h; sourceTree = "<group>"; };
@@ -192,6 +195,8 @@
 		68FC1B402E11036F00A6C73C /* AwemeList */ = {
 			isa = PBXGroup;
 			children = (
+				68A4C91D2E167CCB0056480C /* DYVideoCacheLoader.h */,
+				68A4C91E2E167CCB0056480C /* DYVideoCacheLoader.m */,
 				68FC1B332E11028D00A6C73C /* AwemeListController.h */,
 				68FC1B342E11028D00A6C73C /* AwemeListController.m */,
 				68A4C8272E114AF40056480C /* AwemeListCell.h */,
@@ -338,6 +343,7 @@
 			files = (
 				68A4C83B2E138A430056480C /* CommentViewController.m in Sources */,
 				68A4C9192E13DE150056480C /* CommentCell.m in Sources */,
+				68A4C91F2E167CCB0056480C /* DYVideoCacheLoader.m in Sources */,
 				68A4C81D2E1122B60056480C /* Aweme.m in Sources */,
 				68FC1B3B2E11028D00A6C73C /* MainTabBarController.m in Sources */,
 				68FC1B3C2E11028D00A6C73C /* UserHomePageController.m in Sources */,
